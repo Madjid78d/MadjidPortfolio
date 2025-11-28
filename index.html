@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<!-- ✍️ TEXTE -->
+<!-- <h1> à <h6> : titres -->
+<!-- <p> : paragraphe -->
+<!-- <a href=""> : lien -->
+<!-- <span> : texte en ligne -->
+<!-- <strong> / <em> : importance / emphase -->
+<!-- <br> : saut de ligne -->
+<!-- <hr> : ligne de séparation -->
+
+<!-- 📋 LISTES & TABLEAUX -->
+<!-- <ul> / <ol> / <li> : listes / ul = . / ol = 1 2 3 / li pour add un elements--> 
+<!-- <table> / <tr> / <td> / <th> : tableau -->
+
+<!-- 🖼️ IMAGES -->
+<!-- <img src="image.jpg" alt="texte alternatif"> -->
+<!-- 🔹 alt="" : description (accessibilité) -->
+<!-- 🔹 width="" height="" : taille -->
+<!-- 🔹 title="" : info-bulle -->
+<!-- 🔹 loading="lazy" : chargement différé -->
+<!-- 🔹 align="left|right|center" : alignement (ou CSS : display:flex / text-align) -->
+<!-- 🔹 style="object-fit:cover;" : rognage et position -->
+<!-- 🔹 <figure> + <figcaption> : image + légende -->
+
+
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>Test des lites a puces</title>
+        <style>
+             body {
+            font-family: 'Space Mono', monospace; /* la police */
+            --color: #340087; /* couleur ligne */
+            background-color: #000000; /* couleur fond */
+            background-image: linear-gradient(
+                    0deg,
+                    transparent 24%,
+                    var(--color) 25%,
+                    var(--color) 26%,
+                    transparent 27%,
+                    transparent 74%,
+                    var(--color) 75%,
+                    var(--color) 76%,
+                    transparent 77%,
+                    transparent
+                ),
+                linear-gradient(
+                    90deg,
+                    transparent 24%,
+                    var(--color) 25%,
+                    var(--color) 26%,
+                    transparent 27%,
+                    transparent 74%,
+                    var(--color) 75%,
+                    var(--color) 76%,
+                    transparent 77%,
+                    transparent
+                );
+            background-size: 55px 55px;
+            color: #ffffff; /* couleur texte */
+            overflow-x: hidden;
+            line-height: 1.6;
+            cursor: none;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 1000px;
+            padding: 0 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            animation: fadeInDown 2s ease-out 0.5s both;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: #ffffff;
+            margin-bottom: 3rem;
+            font-weight: 400;
+            font-family: 'Space Mono', monospace;
+            opacity: 0.8;
+            animation: fadeInUp 2s ease-out;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 4rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.6;
+            line-height: 1.8;
+            animation: fadeInUp 2s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+
+          .quick-nav {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: relative;
+            animation: fadeInRight 2s ease-out 0.5s both;
+        }
+
+        .quick-nav-item {
+            width: 50px;
+            height: 50px;
+            background: transparent;
+            border: 1px solid #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .quick-nav-item:hover {
+            background: #ffffff;
+            color: #000000;
+            transform: scale(1.1);
+        }
+
+        </style>
+    </head>
+    <body>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" data-text="Madjid">Madjid</h1>
+            <p class="hero-description">
+                16 ans, futur développeur passionné. Je transforme mes idées en projets concrets. À la recherche d'une future alternance pour continuer à apprendre et créer.
+            </p>
+        </div>
+    </section>
+
+
+    <div class="quick-nav">
+        <a href="index-2.html" class="quick-nav-item" title="Accueil">
+            <i class="fas fa-house"></i>
+        </a>
+        <a href="about.html" class="quick-nav-item" title="À propos">
+            <i class="fas fa-user"></i>
+        </a>
+        <a href="skills.html" class="quick-nav-item" title="Compétences">
+            <i class="fas fa-code"></i>
+        </a>
+        <a href="experience.html" class="quick-nav-item" title="Expériences">
+            <i class="fas fa-briefcase"></i>
+        </a>
+        <a href="contact.html" class="quick-nav-item" title="Contact">
+            <i class="fas fa-envelope"></i>
+        </a>
+    </div>
+    
+    </body>
+</html>
