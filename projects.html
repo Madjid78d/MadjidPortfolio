@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>Portfolio | Mes Projets</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com/">
+        <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../../cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+             body {
+            font-family: 'Space Mono', monospace; /* la police */
+            background-color: #000000; /* couleur fond */
+            background-size: 55px 55px;
+            color: #ffffff; /* couleur texte */
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 1000px;
+            padding: 0 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(5rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            animation: fadeInDown 2s ease-out 0.5s both;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: #ffffff;
+            margin-bottom: 3rem;
+            font-weight: 400;
+            font-family: 'Space Mono', monospace;
+            opacity: 0.8;
+            animation: fadeInUp 2s ease-out;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 4rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.6;
+            line-height: 1.8;
+            animation: fadeInUp 2s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* quick nav */
+          .quick-nav {
+            position: fixed;
+            right: 2rem;    
+            top: 30%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            animation: fadeInRight 2s ease-out 0.5s both;
+        }
+
+        .quick-nav-item {
+            width: 50px;
+            height: 50px;
+            background: transparent;
+            border: 1px solid #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .quick-nav-item:hover {
+            background: #ffffff;
+            color: #000000;
+            transform: scale(1.1);
+        }
+
+        /* main */
+        .main-section {
+            padding: 8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .main-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 6rem;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: #ffffff;
+        }
+
+        /* les blocs*/
+        .experience {
+            background: #000000;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.03) 2px,
+                    rgba(255, 255, 255, 0.03) 4px
+                );
+            pointer-events: none;
+        }
+
+        .terminal-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .terminal-window {
+            background: #000000;
+            border: 1px solid #ffffff;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow: hidden;
+        }
+
+        .terminal-window::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #ffffff;
+            animation: terminalScan 2s linear infinite;
+        }
+
+        @keyframes terminalScan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .terminal-window:hover {
+            transform: translateX(0) scale(1.02);
+            box-shadow: 
+                0 0 30px rgba(255, 255, 255, 0.1),
+                inset 0 0 30px rgba(255, 255, 255, 0.05);
+        }
+
+        .terminal-header {
+            background: #000000;
+            border-bottom: 1px solid #ffffff;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .terminal-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .terminal-title::before {
+            content: '> ';
+            color: #ffffff;
+            opacity: 0.7;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .terminal-date {
+            font-size: 0.8rem;
+            color: #ffffff;
+            opacity: 0.6;
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: #000000;
+            padding: 0.3rem 0.8rem;
+            border: 1px solid #ffffff;
+        }
+
+        .terminal-content {
+            padding: 2rem;
+            position: relative;
+        }
+
+        .terminal-langague {
+            font-size: 1rem;
+            color: #ffffff;
+            opacity: 0.8;
+            font-family: 'Space Mono', monospace;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .terminal-langague::before {
+            content: 'LANGAGE: ';
+            opacity: 0.6;
+        }
+
+        .terminal-description {
+            color: #ffffff;
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            font-family: 'Space Mono', monospace;
+            position: relative;
+        }
+
+        .terminal-description::before {
+            content: 'DESCRIPTION: ';
+            opacity: 0.6;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .terminal-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .terminal-skill {
+            background: #000000;
+            color: #ffffff;
+            padding: 0.4rem 0.8rem;
+            border: 1px solid #ffffff;
+            font-size: 0.75rem;
+            font-weight: 500;
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .terminal-skill::before {
+            content: '[';
+            margin-right: 0.3rem;
+        }
+
+        .terminal-skill::after {
+            content: ']';
+            margin-left: 0.3rem;
+        }
+
+        .terminal-skill:hover {
+            background: #ffffff;
+            color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .terminal-type {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 0.7rem;
+            color: #ffffff;
+            opacity: 0.5;
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: #000000;
+            padding: 0.2rem 0.6rem;
+            border: 1px solid #ffffff;
+        }
+
+        .terminal-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #ffffff;
+            transform: scaleX(0);
+            transition: transform 0.6s ease;
+        }
+
+        .terminal-window:hover .terminal-line {
+            transform: scaleX(1);
+        }
+
+        .terminal-content {
+            padding-bottom: 3rem; 
+        }
+
+        .terminal-btn {
+            position: absolute;
+            bottom: 3rem;
+            right: 1.5rem;
+            background: transparent;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            padding: 0.4rem 0.8rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            text-decoration: none; /* Enlève le souligné */
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            letter-spacing: 1px;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .terminal-btn:hover {
+            background: #ffffff;
+            color: #000000;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+
+            /* Sections mobile */
+            .main-section {
+                padding: 4rem 1rem;
+            }
+
+            .section-title {
+                font-size: clamp(2rem, 6vw, 3rem);
+                letter-spacing: 2px;
+                margin-bottom: 3rem;
+            }
+
+            /* Terminal mobile */
+            .terminal-container {
+                gap: 1.5rem;
+                padding: 1rem;
+            }
+
+            .terminal-window {
+                transform: translateX(-50px);
+            }
+
+            .terminal-header {
+                padding: 1rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .terminal-title {
+                font-size: 1.2rem;
+                margin-bottom: 0;
+            }
+
+            .terminal-langague {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+
+            .terminal-content {
+                padding: 1.5rem;
+            }
+
+            .terminal-description {
+                font-size: 0.9rem;
+                line-height: 1.6;
+                margin-bottom: 1.5rem;
+            }
+
+            .terminal-skill {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.6rem;
+            }
+
+            .terminal-date {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.6rem;
+            }
+
+            .terminal-type {
+                font-size: 0.6rem;
+                padding: 0.1rem 0.4rem;
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+        }
+
+        </style>
+
+
+        <!-- load font awesome pour les icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    </head>
+    <body>
+
+
+    <div class="quick-nav">
+        <a href="index.html" class="quick-nav-item" title="Accueil">
+            <i class="fa-solid fa-house"></i>
+        </a>
+        <a href="about.html" class="quick-nav-item" title="À propos">
+            <i class="fa-solid fa-user"></i>
+        </a>
+        <a href="skills.html" class="quick-nav-item" title="Compétences">
+            <i class="fa-solid fa-file-code"></i>
+        </a>
+        <a href="contact.html" class="quick-nav-item" title="Contact">
+            <i class="fa-solid fa-envelopes-bulk"></i>
+        </a>
+        <a href="projects.html" class="quick-nav-item" title="Projets">
+            <i class="fa-solid fa-folder-open"></i>
+        </a>
+    </div>
+
+
+    <section class="main-section experience">
+        <h1 class="section-title">Mes projets</h1>
+        <div class="terminal-container">
+            <div class="terminal-window">
+                <div class="terminal-type">Spotify playlist</div>
+                <div class="terminal-header">
+                    <h3 class="terminal-title">Spotify Local Playlist Manager</h3>
+                    <div class="terminal-date">08/11 au 12/11 2025</div>
+                </div>
+                <div class="terminal-content">
+                    <div class="terminal-langague">Python</div>
+                    <p class="terminal-description">
+                        Ce projet permet de télécharger des morceaux directement dans votre fichier de playlist locale Spotify.
+                         Après un court paramétrage initial, il suffit simplement d’indiquer le chemin du fichier de la playlist
+                          pour lancer l’utilisation.
+                    </p>
+                    <div class="terminal-skills">
+                        <span class="terminal-skill">Python 3.14</span>
+                        <span class="terminal-skill">Ttkbootstrap / Tkinter</span>
+                        <span class="terminal-skill">Yt-dlp</span>
+                        <span class="terminal-skill">Mutagen</span>
+                    </div><a href="https://github.com/Madjid78d/Spotify-Local-Playlist-Manager" target="_blank" class="terminal-btn"> Essayer <i class="fa-brands fa-github"></i> </a>
+                </div>
+                <div class="terminal-line"></div>
+            </div>
+            
+
+
+            
+
+
+
+            <div class="terminal-window">
+                <div class="terminal-type">Bot Python Chess</div>
+                <div class="terminal-header">
+                    <h3 class="terminal-title">Bot Python Chess</h3>
+                    <div class="terminal-date">03/11 au 24/11 2025</div>
+                </div>
+                <div class="terminal-content">
+                    <div class="terminal-langague">Python 3.14</div>
+                    <p class="terminal-description">
+                        Ce projet est un bot Python dédié au jeu d’échecs, capable d’atteindre un niveau d’environ 2000 Elo. 
+                        Il s’appuie sur des techniques avancées telles que Negamax et l’utilisation de tables PST pour optimiser ses décisions. 
+                        Une interface a été spécialement conçue pour accompagner ce bot.
+                    </p>
+                    <div class="terminal-skills">
+                        <span class="terminal-skill">Python 3.12</span>
+                        <span class="terminal-skill">Python Chess</span>
+                        <span class="terminal-skill">Py game-ce</span>
+                    </div><a href="https://github.com/Madjid78d/python-chess" target="_blank" class="terminal-btn"> Essayer <i class="fa-brands fa-github"></i> </a>
+                </div>
+                <div class="terminal-line"></div>
+            </div>
+
+
+        </div>
+    </section>
+
+
+
+    <script>
+        // animation css scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateX(0) scale(1)';
+
+                    }, index * 200);
+                }
+            });
+        }, observerOptions);
+
+        // check les fenetres
+        document.querySelectorAll('.terminal-window').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateX(-100px) scale(0.95)';
+            el.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            observer.observe(el);
+        });
+
+        // animation css terminal
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes terminalType {
+                from {
+                    opacity: 0;
+                    transform: translateX(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            
+            @keyframes terminalFadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            @keyframes terminalSkillAppear {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.8);
+                }
+                100% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        
+    </script>
+    
+    </body>
+</html>
