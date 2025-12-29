@@ -1,69 +1,62 @@
 <!DOCTYPE html>
-
 <html lang="fr">
+<head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio | Compétences</title>
+    
     <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
-    <head>
-        <meta charset="utf-8">
-        <title>Portfolio</title>
-        <style>
-             body {
-            font-family: 'Space Mono', monospace; /* la police */
-            background-color: #000000; /* couleur fond */
-            background-size: 55px 55px;
-            color: #ffffff; /* couleur texte */
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Space Mono', monospace;
+            background-color: #121212;
+            color: #ffffff;
             overflow-x: hidden;
             line-height: 1.6;
+            margin: 0;
         }
 
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        
         @keyframes fadeInRight {
             from {
                 opacity: 0;
-                transform: translateX(50px);
+                transform: translateX(50px) translateY(-50%);
             }
             to {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateX(0) translateY(-50%);
+            }
+        }
+
+        @keyframes fadeOutRight {
+            from {
+                opacity: 1;
+                transform: translateX(0) translateY(-50%);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(50px) translateY(-50%);
             }
         }
 
         /* quick nav */
-          .quick-nav {
+        .quick-nav {
             position: fixed;
             right: 2rem;    
-            top: 30%;
+            top: 50%;
             transform: translateY(-50%);
-            z-index: 100;
+            z-index: 1000;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            animation: fadeInRight 2s ease-out 0.5s both;
-            position: center;
+            gap: 1.5rem;
+
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.4s ease;
+        }
+        .quick-nav.visible, 
+        .quick-nav:hover {
+            opacity: 1 !important;
         }
 
         .quick-nav-item {
@@ -87,7 +80,43 @@
             transform: scale(1.1);
         }
 
-        /* Section principale */
+        .quick-nav.visible {
+            animation: fadeInRight 1.5s ease-out forwards;
+        }
+
+        .quick-nav.fade-out {
+            animation: fadeOutRight 1.5s ease-out forwards;
+        }
+
+        /* quick nav mobile*/
+        .nav-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8); z-index: 900;
+            opacity: 0; visibility: hidden; transition: 0.4s; backdrop-filter: blur(4px);
+        }
+        .nav-overlay.active { opacity: 1; visibility: visible; }
+
+        .menu-toggle {
+            display: none; position: fixed; top: 20px; right: 20px;
+            width: 40px; height: 40px; z-index: 1100; cursor: pointer;
+            background: #1f1f1f; border: 1px solid white; border-radius: 5px; padding: 5px;
+        }
+
+        .menu-toggle span { display: block; width: 100%; height: 2px; background: white; margin: 6px 0; transition: 0.3s; }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .quick-nav {
+                right: -100%; top: 0; height: 100vh; width: 250px;
+                background: #111; transform: none; padding: 80px 20px; justify-content: flex-start;
+                animation: none; 
+            }
+            .quick-nav.active { right: 0; }
+            .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+            .menu-toggle.active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+        }
+
         .main-section {
             padding: 8rem 2rem;
             max-width: 1400px;
@@ -95,80 +124,26 @@
             position: relative;
         }
 
-        .main-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ffffff, transparent);
-            animation: scan 3s linear infinite;
-        }
-
-        @keyframes scan {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
         .section-title {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(3rem, 6vw, 5rem);
-            font-weight: 900;
+            font-size: clamp(2rem, 6vw, 5rem);
             text-align: center;
             margin-bottom: 6rem;
-            color: #ffffff;
             text-transform: uppercase;
             letter-spacing: 4px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 2px;
-            background: #ffffff;
-        }
-        /* Skills Section avec effet de matrice */
-        .skills {
-            background: #000000;
         }
 
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 3rem;
         }
 
         .skill-card {
-            background: transparent;
+            background: #1F1F1F;
             border: 1px solid #ffffff;
-            border-radius: 0;
             padding: 3rem 2rem;
             text-align: center;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
-        }
-
-        .skill-card:hover::before {
-            transform: translateX(100%);
         }
 
         .skill-card:hover {
@@ -176,202 +151,42 @@
             box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
         }
 
-        .skill-icon {
-            font-size: 4rem;
-            margin-bottom: 2rem;
-            color: #ffffff;
-        }
+        .skill-icon { font-size: 4rem; margin-bottom: 2rem; }
+        .skill-title { font-size: 1.5rem; margin-bottom: 1.5rem; text-transform: uppercase; }
+        .skill-description { opacity: 0.7; font-size: 0.9rem; }
 
-        .skill-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: #ffffff;
-            font-family: 'Orbitron', monospace;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .skill-description {
-            color: #ffffff;
-            line-height: 1.8;
-            opacity: 0.7;
-        }
-
-        /* Niveaux de compétence */
-        .skill-level {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 0;
-        }
-
-        .skill-level-title {
-            font-size: 0.9rem;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .skill-bar {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 0;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .skill-progress {
-            height: 100%;
-            background: #ffffff;
-            border-radius: 0;
-            transition: width 1s ease;
-            position: relative;
-        }
-
-        .skill-progress::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            /* Navigation mobile */
-            .nav-links {
-                position: fixed;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100vh;
-                background: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(20px);
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 3rem;
-                transition: left 0.3s ease;
-                z-index: 999;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .nav-links a {
-                font-size: 2rem;
-                text-transform: uppercase;
-                letter-spacing: 3px;
-            }
-
-            /* Menu hamburger */
-            .menu-toggle {
-                display: block;
-                width: 30px;
-                height: 20px;
-                position: relative;
-                cursor: pointer;
-                z-index: 1000;
-            }
-
-            .menu-toggle span {
-                display: block;
-                width: 100%;
-                height: 2px;
-                background: #ffffff;
-                position: absolute;
-                transition: all 0.3s ease;
-            }
-
-            .menu-toggle span:nth-child(1) {
-                top: 0;
-            }
-
-            .menu-toggle span:nth-child(2) {
-                top: 50%;
-                transform: translateY(-50%);
-            }
-
-            .menu-toggle span:nth-child(3) {
-                bottom: 0;
-            }
-
-            .menu-toggle.active span:nth-child(1) {
-                transform: rotate(45deg);
-                top: 50%;
-            }
-
-            .menu-toggle.active span:nth-child(2) {
-                opacity: 0;
-            }
-
-            .menu-toggle.active span:nth-child(3) {
-                transform: rotate(-45deg);
-                bottom: 50%;
-            }
-        }
+        .skill-level { margin-top: 1.5rem; padding: 1rem; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .skill-bar { width: 100%; height: 4px; background: rgba(255, 255, 255, 0.1); overflow: hidden; }
+        .skill-progress { height: 100%; background: #ffffff; transition: width 1s ease; }
 
         /* scrollbar */
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #ffffff; }
+    </style>
+</head>
+<body>
 
-        ::-webkit-scrollbar-track {
-            background: #000000;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #ffffff;
-        }
-
-        </style>
-
-
-        <!-- load font awesome pour les icons -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    </head>
-    <body>
-
-
-    <div class="quick-nav">
-        <a href="index.html" class="quick-nav-item" title="Accueil">
-            <i class="fa-solid fa-house"></i>
-        </a>
-        <a href="about.html" class="quick-nav-item" title="À propos">
-            <i class="fa-solid fa-user"></i>
-        </a>
-        <a href="projects.html" class="quick-nav-item" title="Projets">
-            <i class="fa-solid fa-folder-open"></i>
-        </a>
-        <a href="skills.html" class="quick-nav-item" title="Compétences">
-            <i class="fa-solid fa-file-code"></i>
-        </a>
-        <a href="contact.html" class="quick-nav-item" title="Contact">
-            <i class="fa-solid fa-envelopes-bulk"></i>
-        </a>
+    <div class="menu-toggle" id="menuBtn">
+        <span></span><span></span><span></span>
     </div>
 
-    <!-- Main Section -->
+    <div class="nav-overlay" id="overlay"></div>
+
+    <div class="quick-nav" id="sidebar">
+        <a href="index.html" class="quick-nav-item" title="Accueil"><i class="fa-solid fa-house"></i></a>
+        <a href="about.html" class="quick-nav-item" title="À propos"><i class="fa-solid fa-user"></i></a>
+        <a href="projects.html" class="quick-nav-item" title="Projets"><i class="fa-solid fa-folder-open"></i></a>
+        <a href="skills.html" class="quick-nav-item" title="Compétences"><i class="fa-solid fa-file-code"></i></a>
+        <a href="contact.html" class="quick-nav-item" title="Contact"><i class="fa-solid fa-envelopes-bulk"></i></a>
+    </div>
+
     <section class="main-section skills">
         <h1 class="section-title">Mes compétences</h1>
         <div class="skills-grid">
+            
             <div class="skill-card">
-                <div class="skill-icon">
-                    <i class="fa-brands fa-python"></i>
-                </div>
+                <div class="skill-icon"><i class="fa-brands fa-python"></i></div>
                 <h3 class="skill-title">Python 3.14</h3>
                 <p class="skill-description">
                     Maîtrise en développement Python : plus d’un an d’apprentissage, 
@@ -379,17 +194,13 @@
                     et réalisation de plusieurs projets concrets pour renforcer l’expérience pratique.
                 </p>
                 <div class="skill-level">
-                    <div class="skill-level-title">Niveau : Avancé (70%)</div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 70%;"></div>
-                    </div>
+                    <div class="skill-level-title">Niveau : 70%</div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 70%;"></div></div>
                 </div>
-
             </div>
+
             <div class="skill-card">
-                <div class="skill-icon">
-                    <i class="devicon-csharp-plain"></i>
-                </div>
+                <div class="skill-icon"><i class="devicon-csharp-plain"></i></div>
                 <h3 class="skill-title">C#</h3>
                 <p class="skill-description">
                     Apprentissage du C# : depuis plusieurs mois, compréhension des bases essentielles 
@@ -398,33 +209,28 @@
                     projet pour mettre en pratique ces connaissances.
                 </p>
                 <div class="skill-level">
-                    <div class="skill-level-title">Niveau : Intermédiaire (50%)</div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 50%;"></div>
-                    </div>
+                    <div class="skill-level-title">Niveau : 50%</div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 50%;"></div></div>
                 </div>
             </div>
+
             <div class="skill-card">
-                <div class="skill-icon">
-                    <i class="fa-brands fa-html5"></i>
-                </div>
+                <div class="skill-icon"><i class="fa-brands fa-html5"></i></div>
                 <h3 class="skill-title">HTML</h3>
                 <p class="skill-description">
                     Apprentissage du HTML : maîtrise des bases essentielles (structure des pages, 
                     balises sémantiques, formulaires, intégration d’images et de liens) et 
                     réalisation de projets concrets pour créer des sites web clairs et bien organisés.
+                    
                 </p>
                 <div class="skill-level">
-                    <div class="skill-level-title">Niveau : Intermédiaire (65%)</div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 65%;"></div>
-                    </div>
+                    <div class="skill-level-title">Niveau : 65%</div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 65%;"></div></div>
                 </div>
             </div>
+
             <div class="skill-card">
-                <div class="skill-icon">   
-                    <i class="devicon-css3-plain"></i>
-                </div>
+                <div class="skill-icon"><i class="devicon-css3-plain"></i></div>
                 <h3 class="skill-title">Css</h3>
                 <p class="skill-description">
                     Apprentissage du CSS : compréhension des fondamentaux (sélecteurs, mise en page 
@@ -433,16 +239,13 @@
                      aux interfaces.
                 </p>
                 <div class="skill-level">
-                    <div class="skill-level-title">Niveau : Intermédiaire (60%)</div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 60%;"></div>
-                    </div>
+                    <div class="skill-level-title">Niveau : 60%</div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 60%;"></div></div>
                 </div>
             </div>
+
             <div class="skill-card">
-                <div class="skill-icon">   
-                    <i class="devicon-lua-plain"></i>
-                </div>
+                <div class="skill-icon"><i class="devicon-lua-plain"></i></div>
                 <h3 class="skill-title">Lua</h3>
                 <p class="skill-description">
                     Apprentissage du Lua : plus d’un an de pratique, compréhension des bases 
@@ -451,13 +254,56 @@
                     script d’automatisation et un prototype de jeu.
                 </p>
                 <div class="skill-level">
-                    <div class="skill-level-title">Niveau : Avancé (85%)</div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="width: 85%;"></div>
-                    </div>
+                    <div class="skill-level-title">Niveau : 85%</div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
                 </div>
             </div>
+
+            <div class="skill-card">
+                <div class="skill-icon"><i class="devicon-photoshop-plain"></i></div>
+                <h3 class="skill-title">Photoshop</h3>
+                <p class="skill-description">
+                    Pratique de Photoshop : près de trois ans 
+                    d’utilisation régulière, maîtrise des bases essentielles du
+                     graphisme (retouches, compositions, typographies et effets visuels) et
+                      développement d’un niveau solide. Réalisation de nombreux visuels constituant une 
+                      véritable expérience de travail graphique.
+                    </p>
+                <div class="skill-level">
+                    <div class="skill-level-title">Niveau : 90%</div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+                </div>
+            </div>
+
         </div>
     </section>
-    </body>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.innerWidth > 768) {
+                sidebar.classList.add('visible');
+                    setTimeout(() => {
+                        sidebar.classList.add('fade-out');
+                        setTimeout(() => {
+                            sidebar.classList.remove('visible', 'fade-out');
+                        }, 1500); 
+                    }, 3000);
+            }
+        });
+
+
+        function toggleMenu() {
+            menuBtn.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+    </script>
+</body> 
 </html>
