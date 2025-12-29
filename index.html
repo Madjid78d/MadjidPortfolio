@@ -7,32 +7,7 @@
         <style>
              body {
             font-family: 'Space Mono', monospace; /* la police */
-            --color: #414140; /* couleur ligne */
-            background-color: #1A1A19; /* couleur fond */
-            background-image: linear-gradient(
-                    0deg,
-                    transparent 24%,
-                    var(--color) 25%,
-                    var(--color) 26%,
-                    transparent 27%,
-                    transparent 74%,
-                    var(--color) 75%,
-                    var(--color) 76%,
-                    transparent 77%,
-                    transparent
-                ),
-                linear-gradient(
-                    90deg,
-                    transparent 24%,
-                    var(--color) 25%,
-                    var(--color) 26%,
-                    transparent 27%,
-                    transparent 74%,
-                    var(--color) 75%,
-                    var(--color) 76%,
-                    transparent 77%,
-                    transparent
-                );
+            background-color: #1C1C1C; /* #0B0F16 couleur fond */
             background-size: 55px 55px;
             color: #ffffff; /* couleur texte */
             overflow-x: hidden;
@@ -123,6 +98,17 @@
             }
         }
 
+        @keyframes fadeOutRight {
+            from {
+                opacity: 1;
+                transform: translateX(0) translateY(-50%);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(50px) translateY(-50%);
+            }
+        }
+
         /* quick nav */
           .quick-nav {
             position: fixed;
@@ -205,12 +191,36 @@
         <a href="contact.html" class="quick-nav-item" title="Contact">
             <i class="fa-solid fa-envelopes-bulk"></i>
         </a>
-        <a href="test.html" class="quick-nav-item" title="Test">
-            <i class="fa-solid fa-envelopes-bulk"></i>
-        </a>
     </div>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.innerWidth > 768) {
+                sidebar.classList.add('visible');
+                    setTimeout(() => {
+                        sidebar.classList.add('fade-out');
+                        setTimeout(() => {
+                            sidebar.classList.remove('visible', 'fade-out');
+                        }, 1500); 
+                    }, 3000);
+            }
+        });
+
+
+        function toggleMenu() {
+            menuBtn.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+    </script>
     
     </body>
 </html>
-
-
